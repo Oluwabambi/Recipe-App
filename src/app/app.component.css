@@ -1,0 +1,24 @@
+* {
+    font-family: 'Fredoka One', cursive;
+}
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 0;
+}
+.recipe-card {
+    display: flex;
+    height: 40rem;
+    padding: 1rem;
+    justify-content: space-between;
+}
+.recipe-list {
+    width: 15%;
+    background-color: #EDE530;
+    border-radius: 20px;
+}
+.recipe-description {
+    width: 80%;
+    background-color: #EDE530;
+    border-radius: 20px;
+}
