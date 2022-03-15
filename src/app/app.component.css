@@ -1,10 +1,14 @@
-* {
+/* * {
     font-family: 'Fredoka One', cursive;
+} */
+.first-class {
+    opacity: 0.6;
 }
 h1 {
     text-align: center;
     color: white;
     margin-bottom: 0;
+    margin-top: 2rem;
 }
 .recipe-card {
     display: flex;
@@ -13,12 +17,123 @@ h1 {
     justify-content: space-between;
 }
 .recipe-list {
-    width: 15%;
+    width: 35%;
+    background-color: #EDE530;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+.act-icon {
+    text-align: center;
+    margin-top: 2rem;
+    height: 2rem;
+}
+.recipes {
+    padding: 1rem;
+    overflow: scroll;
+}
+.recipe-item {
+    text-align: center;
+    padding: 1rem;
+    cursor: pointer;
+}
+.recipe-item:nth-child(odd) {
+    background-color: #D21027;
+    color: white
+}
+.recipe-item:nth-child(even) {
+    background-color: #CDADAD;
+    color: #D21027;
+}
+.recipe-item:hover {
+    opacity: 0.8;
+}
+.new-recipe {
+    position: fixed;
+    top: 8%;
+    background-color: #CDADAD;
+    right: 30%;
+    left: 30%;
+    box-shadow: 3px 3px 10px #363434;
+    border-radius: 25px;
+}
+.new-recipe h2 {
+    text-align: center;
+    position: relative;
+    margin-top: 1rem;
+}
+.fa-xmark {
+    position: absolute;
+    right: 10px;
+    z-index: 1000;
+    top: 1rem;
+    transition: color 0.25s;
+}
+.fa-xmark:hover {
+    color: white;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+label, input, textarea {
+    width: 100%;
+}
+label {
+    text-align: center;
+}
+input, textarea {
+    padding: 0.5rem;
+}
+.recipe-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+}
+button {
+    border-radius: 7px;
+    border: none;
+    padding: 0.5rem 2rem;
+    background-color: #D21027;
+    transition: all 0.25s;
+}
+button:hover:not([disabled]) {
+    background-color: #EDE530;
+    color: white;
+}
+.recipe-description {
+    width: 60%;
     background-color: #EDE530;
     border-radius: 20px;
 }
-.recipe-description {
-    width: 80%;
-    background-color: #EDE530;
-    border-radius: 20px;
+.action-icons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+.fa-solid{
+    font-size: 25px;
+    margin-right: 0.75rem;
+    background-color: inherit;
+    cursor: pointer;
+}
+.recipe-description h1 {
+    background-color: black;
+    color: #EDE530;
+    margin-top: 0;
+}
+.ingred-section, .direct-section {
+    padding: 1rem 2rem 1rem;
+}
+h2 {
+    font-weight: bold;
+}
+.direct-section ul {
+    list-style-type: disclosure-closed;
+}
+li {
+    margin-bottom: 0.5rem;
 }
