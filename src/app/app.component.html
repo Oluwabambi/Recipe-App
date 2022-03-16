@@ -1,39 +1,42 @@
-<div [ngClass]="{'first-class' : dialogBox}">
+<div [ngClass]="{'first-class' : dialogBox || editRecipeDialog}">
   <h1>Recipes for You!</h1>
   <div class="recipe-card">
     <div class="recipe-list">
       <div class="act-icon">
-        <i (click)="addNewRecipe()" class="fa-solid fa-circle-plus"></i>
+        <i (click)="dialogBox = true" class="fa-solid fa-circle-plus"></i>
       </div>
       <div class="recipes">
-        <div (click)="selectedRecipe(recipe)" *ngFor="let recipe of allRecipes" class="recipe-item">{{recipe.name}}</div>
+        <div [class.selected]="recipe === currentRecipe" (click)="selectedRecipe(recipe)" *ngFor="let recipe of allRecipes" class="recipe-item">{{recipe.name}}</div>
       </div>
 
     </div>
     
     <div class="recipe-description">
       <div class="action-icons">
-        <i class="fa-solid fa-pen-to-square"></i>
+        <i (click)="onEditClick()" class="fa-solid fa-pen-to-square"></i>
         <i (click)="removeRecipe(currentRecipe.id)" class="fa-solid fa-trash-can"></i>
       </div>
       <h1>{{ currentRecipe.name }}</h1>
-      <div class="ingred-section">
-        <h2>Ingredients</h2>
-        <ul *ngFor="let ingredient of currentIngredients">
-          <li>{{ ingredient }}</li>
-        </ul>
+      <div class="recipe-details">
+        <div class="ingred-section">
+          <h2>Ingredients</h2>
+          <ul *ngFor="let ingredient of currentIngredients">
+            <li>{{ ingredient }}</li>
+          </ul>
+        </div>
+        <div class="direct-section">
+          <h2>Directions</h2>
+          <ul *ngFor="let direction of currentDirections">
+            <li>{{ direction }}</li>
+          </ul>
+        </div>
       </div>
-      <div class="direct-section">
-        <h2>Directions</h2>
-        <ul *ngFor="let direction of currentDirections">
-          <li>{{ direction }}</li>
-        </ul>
-      </div>
+      
     </div>
   </div>
 </div>
-<div *ngIf="dialogBox" class="new-recipe">
-  <i (click)="removeDialog()" class="fa-solid fa-xmark"></i>
+<div [ngClass]="{'show': dialogBox}" class="new-recipe">
+  <i (click)="dialogBox = false" class="fa-solid fa-xmark"></i>
   <h2>Add a new Recipe</h2>
   <form [formGroup]="recipeForm">
     <div class="p-3">
@@ -57,7 +60,36 @@
     </div>
     <div class="recipe-buttons">
       <button (click)="submitRecipe()" [disabled]="recipeForm.invalid" type="submit">Add</button>
-      <button (click)="removeDialog()" type="submit">Cancel</button>
+      <button (click)="dialogBox = false" type="submit">Cancel</button>
+    </div>
+  </form>
+</div>
+<div [ngClass]="{'show': editRecipeDialog}"  class="edit-recipe">
+  <i (click)="editRecipeDialog = false" class="fa-solid fa-xmark"></i>
+  <h2>Edit Recipe</h2>
+  <form [formGroup]="recipeForm">
+    <div class="p-3">
+      <label for="name">Name</label>
+      <input value="{{ currentRecipe.name }}" placeholder="Enter name" id="editName" type="text" formControlName="name">
+    </div>
+    <div class="p-3">
+      <label for="ingredients">Ingredients</label>
+      <textarea value="{{ currentRecipe.ingredients }}" id="editIngredient" name="ingredients" cols="30" rows="6" placeholder='separate each ingredient with "*"
+      Example:
+      Sugar * Coffee * Lime' formControlName="ingredients"></textarea>
+    </div>
+    <div class="p-3">
+      <label for="directions">Directions</label>
+      <textarea value="{{ currentRecipe.directions }}" id="editDirection" name="directions" cols="30" rows="6" placeholder='separate each direction step with "*"
+      Example:
+      Boil for 5 minutes *
+      Keep in a cool environment *
+      Add 1/2 teaspoon of sugar
+      ' formControlName="directions"></textarea>
+    </div>
+    <div class="recipe-buttons">
+      <button (click)="editRecipe(currentRecipe.id)" type="submit">Update</button>
+      <button (click)="editRecipeDialog = false" type="submit">Cancel</button>
     </div>
   </form>
 </div>

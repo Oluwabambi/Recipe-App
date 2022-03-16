@@ -13,7 +13,7 @@ h1 {
 .recipe-card {
     display: flex;
     height: 40rem;
-    padding: 1rem;
+    padding: 3rem 1rem;
     justify-content: space-between;
 }
 .recipe-list {
@@ -49,8 +49,9 @@ h1 {
 .recipe-item:hover {
     opacity: 0.8;
 }
-.new-recipe {
+.new-recipe, .edit-recipe {
     position: fixed;
+    display: none;
     top: 8%;
     background-color: #CDADAD;
     right: 30%;
@@ -58,7 +59,10 @@ h1 {
     box-shadow: 3px 3px 10px #363434;
     border-radius: 25px;
 }
-.new-recipe h2 {
+.show {
+    display: block;
+}
+.new-recipe h2, .edit-recipe h2 {
     text-align: center;
     position: relative;
     margin-top: 1rem;
@@ -69,6 +73,12 @@ h1 {
     z-index: 1000;
     top: 1rem;
     transition: color 0.25s;
+}
+.fa-solid:hover {
+    color: #D21027;
+}
+.recipes .selected {
+    background-color: black;
 }
 .fa-xmark:hover {
     color: white;
@@ -108,6 +118,11 @@ button:hover:not([disabled]) {
     width: 60%;
     background-color: #EDE530;
     border-radius: 20px;
+    /* overflow: scroll; */
+}
+.recipe-details {
+    overflow: scroll;
+    height: 27rem;
 }
 .action-icons {
     display: flex;

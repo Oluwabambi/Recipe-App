@@ -10,6 +10,7 @@ import { DataService } from './service/data.service';
 export class AppComponent {
   title = 'WebMagnat-frontend-test';
   dialogBox=false;
+  editRecipeDialog = false;
   allRecipes: any;
   currentRecipe: any = '';
   currentIngredients = []
@@ -59,15 +60,28 @@ export class AppComponent {
     })
   }
 
+  onEditClick() {
+    this.editRecipeDialog = true;
+    // let recipeName: any = document.getElementById('editName');
+    // console.log(recipeName);
+    
+    // recipeName.value = this.currentRecipe.name;
+    // console.log(recipeName.value);
+  }
+
+  editRecipe(id:any) {
+    
+    this.dataService.editRecipe(id, this.recipeForm.value).subscribe( () => {
+      this.editRecipeDialog = false;
+      this.showRecipes();
+    } )
+  }
+
   removeRecipe(id:any) {
     if(confirm("Are you sure you want to delete?")){
       this.dataService.deleteRecipe(id).subscribe(()=> {
         this.showRecipes();
       })
     }
-  }
-
-  removeDialog() {
-    this.dialogBox = false;
   }
 }
