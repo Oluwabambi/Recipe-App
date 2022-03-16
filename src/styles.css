@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: #D21027;
+    background-image: url(./assets/recipebg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     font-family: 'Fredoka One', cursive;
 }

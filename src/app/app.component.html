@@ -1,5 +1,5 @@
 <div [ngClass]="{'first-class' : dialogBox || editRecipeDialog}">
-  <h1>Recipes for You!</h1>
+  <h1 class="recipe-head">Recipe App</h1>
   <div class="recipe-card">
     <div class="recipe-list">
       <div class="act-icon">
@@ -16,7 +16,10 @@
         <i (click)="onEditClick()" class="fa-solid fa-pen-to-square"></i>
         <i (click)="removeRecipe(currentRecipe.id)" class="fa-solid fa-trash-can"></i>
       </div>
-      <h1>{{ currentRecipe.name }}</h1>
+      <div class="recipe-name">
+        <h1>{{ currentRecipe.name }}</h1>
+      </div>
+      <hr>
       <div class="recipe-details">
         <div class="ingred-section">
           <h2>Ingredients</h2>
@@ -43,13 +46,13 @@
       <label for="name">Name</label>
       <input type="text" placeholder="Enter recipe name" formControlName="name">
     </div>
-    <div class="p-3">
+    <div class="px-3">
       <label for="ingredients">Ingredients</label>
       <textarea name="ingredients" cols="30" rows="6" placeholder='separate each ingredient with "*"
       Example:
       Sugar * Coffee * Lime' formControlName="ingredients"></textarea>
     </div>
-    <div class="p-3">
+    <div class="pt-3 px-3 pb-1">
       <label for="directions">Directions</label>
       <textarea name="directions" cols="30" rows="6" placeholder='separate each direction step with "*"
       Example:
