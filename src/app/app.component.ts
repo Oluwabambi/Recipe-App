@@ -63,10 +63,7 @@ export class AppComponent {
   onEditClick() {
     this.editRecipeDialog = true;
     // let recipeName: any = document.getElementById('editName');
-    // console.log(recipeName);
-    
     // recipeName.value = this.currentRecipe.name;
-    // console.log(recipeName.value);
   }
 
   editRecipe(id:any) {
