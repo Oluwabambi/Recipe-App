@@ -15,6 +15,9 @@ export class AppComponent {
   currentRecipe: any = '';
   currentIngredients = []
   currentDirections = []
+  searchInput: any;
+  filterSearch: any = '';
+  completeInput: any = null;
 
 
   constructor (private fb: FormBuilder, private dataService: DataService) {}
@@ -29,13 +32,27 @@ export class AppComponent {
     directions : new FormControl('', Validators.required),
   })
 
+  splitIngredients() {
+    this.showRecipes();
+
+  }
+
   showRecipes() {
+    let loader: any = document.querySelector('.loader');  
     this.dataService.getRecipes().subscribe( res => {
-      this.allRecipes = res;
-      console.log(res);
-      this.currentRecipe = this.allRecipes[0];
-      this.currentIngredients = this.currentRecipe.ingredients.split("*");
-      this.currentDirections = this.currentRecipe.directions.split("*"); 
+      if (res) {
+        loader.style.display = "none";
+        this.allRecipes = res;
+        console.log(res);
+        // for (let i = 0; i < this.allRecipes.length; i++) {
+        //   const curr:any = this.allRecipes[i]
+        //   curr.ingredients = curr.ingredients.split("*");
+        //   curr.directions = curr.directions.split("*");
+        // }
+        this.currentRecipe = this.allRecipes[0];
+        this.currentIngredients = this.currentRecipe.ingredients.split("*");
+        this.currentDirections = this.currentRecipe.directions.split("*");         
+      }
     })
   }
 
@@ -58,27 +75,64 @@ export class AppComponent {
       this.dialogBox = false;
       this.showRecipes();
     })
+    this.recipeForm.reset();
   }
 
   onEditClick() {
-    this.editRecipeDialog = true;
-    // let recipeName: any = document.getElementById('editName');
-    // recipeName.value = this.currentRecipe.name;
+    this.editRecipeDialog = true;   
   }
 
-  editRecipe(id:any) {
-    
-    this.dataService.editRecipe(id, this.recipeForm.value).subscribe( () => {
+  editRecipe(currentRec:any) {
+    let editedRec: any = this.recipeForm.value;
+    let recipeName: any = document.getElementById('editName');
+    let editIngredient: any = document.getElementById('editIngredient');
+    let editDirection: any = document.getElementById('editDirection');
+
+    editedRec.name = recipeName.value;
+    editedRec.ingredients = editIngredient.value;
+    editedRec.directions = editDirection.value;
+    console.log(editedRec);  
+    this.dataService.editRecipe(currentRec.id, editedRec).subscribe( () => {
+      
       this.editRecipeDialog = false;
       this.showRecipes();
+      console.log(this.recipeForm.value);
+      
     } )
   }
 
-  removeRecipe(id:any) {
+  removeRecipe(recipe:any) {
     if(confirm("Are you sure you want to delete?")){
-      this.dataService.deleteRecipe(id).subscribe(()=> {
-        this.showRecipes();
+      this.allRecipes = this.allRecipes.filter((r:any) => r !== recipe)
+      this.dataService.deleteRecipe(recipe.id).subscribe(()=> {
+        // this.showRecipes();
+        const lastIndex = this.allRecipes.length - 1;
+        this.currentRecipe = this.allRecipes[lastIndex];
+        this.selectedRecipe(this.currentRecipe);
       })
     }
+    
+    
+  }
+
+  filter(text:any) {
+    // this.completeInput = this.searchInput;
+    // text = text.split(" ")
+    // console.log(text);
+    console.log('done');
+    
+    
+    // let filteredArray:any = this.allRecipes
+    // const searchInput = text.toLowerCase();
+    // if (searchInput !== " ") {
+    //   filteredArray = filteredArray.filter( (obj: any) => {
+    //     return obj.ingredients.toLowerCase().includes(searchInput)
+    //   });
+    // }
+    
+    
+    // this.showRecipes();
+    // console.log(this.searchInput);
+    
   }
 }

@@ -4,5 +4,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Nunito Sans', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
 }

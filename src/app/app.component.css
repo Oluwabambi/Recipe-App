@@ -1,6 +1,7 @@
 /* * {
     font-family: 'Fredoka One', cursive;
 } */
+
 .first-class {
     opacity: 0.6;
 }
@@ -10,12 +11,15 @@ h1 {
     margin-bottom: 0;
     margin-top: 2rem;
 }
+h1, h2 {
+    font-family: 'Fredoka One', cursive;
+}
 .recipe-head {
     font-size: 4rem;
 }
 .recipe-card {
     display: flex;
-    height: 40rem;
+    height: 35.5rem;
     padding: 3rem 1rem;
     justify-content: space-between;
 }
@@ -33,6 +37,24 @@ h1 {
     text-align: center;
     margin-top: 2rem;
     height: 2rem;
+}
+.searchrec {
+    padding: 1rem;
+    position: relative;
+}
+#searchbar {
+    border-radius: 5px;
+    border: 2px solid tan;
+}
+.btn-search {
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    border: none;
+    padding: 0.5rem 2rem;
+}
+.btn-search:hover {
+    background-color: transparent;
 }
 .recipes {
     padding: 1rem;
@@ -71,6 +93,9 @@ h1 {
 }
 .show {
     display: block;
+}
+.bg-bloo {
+    background-color: blue;
 }
 .new-recipe h2, .edit-recipe h2 {
     text-align: center;
@@ -113,14 +138,14 @@ input, textarea {
     padding-left: 6rem;
     padding-right: 6rem;
 }
-button {
+.recipe-buttons button {
     border-radius: 7px;
     border: none;
     padding: 0.5rem 2rem;
     background-color: #D21027;
     transition: all 0.25s;
 }
-button:hover:not([disabled]) {
+.recipe-buttons button:hover:not([disabled]) {
     background-color: #EDE530;
     color: white;
 }
@@ -135,7 +160,7 @@ button:hover:not([disabled]) {
 }
 .recipe-details {
     overflow: scroll;
-    height: 24.5rem;
+    height: 19.5rem;
 }
 .action-icons {
     display: flex;
@@ -170,4 +195,21 @@ h2 {
 }
 li {
     margin-bottom: 0.5rem;
+}
+.loader {
+    border: 10px solid tan;
+    border-top: 10px solid #3a729c;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: loader 1s linear infinite;
+}
+@keyframes loader {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

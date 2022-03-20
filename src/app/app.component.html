@@ -4,9 +4,15 @@
     <div class="recipe-list">
       <div class="act-icon">
         <i (click)="dialogBox = true" class="fa-solid fa-circle-plus"></i>
-      </div>
+      </div>      
       <div class="recipes">
-        <div [class.selected]="recipe === currentRecipe" (click)="selectedRecipe(recipe)" *ngFor="let recipe of allRecipes" class="recipe-item">{{recipe.name}}</div>
+        <div class="searchrec">
+          <input [(ngModel)]="searchInput" type="search" name="recipeSearch" placeholder="Search for recipe" id="searchbar">
+          <button (click)="filter(searchInput)" class="btn-search"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="loader"></div>
+        <div [class.selected]="recipe === currentRecipe" (click)="selectedRecipe(recipe)" *ngFor="let recipe of allRecipes | searchFilter: completeInput" class="recipe-item">{{recipe.name}}</div>
+
       </div>
 
     </div>
@@ -14,7 +20,7 @@
     <div class="recipe-description">
       <div class="action-icons">
         <i (click)="onEditClick()" class="fa-solid fa-pen-to-square"></i>
-        <i (click)="removeRecipe(currentRecipe.id)" class="fa-solid fa-trash-can"></i>
+        <i (click)="removeRecipe(currentRecipe)" class="fa-solid fa-trash-can"></i>
       </div>
       <div class="recipe-name">
         <h1>{{ currentRecipe.name }}</h1>
@@ -23,14 +29,14 @@
       <div class="recipe-details">
         <div class="ingred-section">
           <h2>Ingredients</h2>
-          <ul *ngFor="let ingredient of currentIngredients">
-            <li>{{ ingredient }}</li>
+          <ul>
+            <li *ngFor="let ingredient of currentIngredients">{{ ingredient }}</li>
           </ul>
         </div>
         <div class="direct-section">
           <h2>Directions</h2>
-          <ul *ngFor="let direction of currentDirections">
-            <li>{{ direction }}</li>
+          <ul>
+            <li *ngFor="let direction of currentDirections">{{ direction }}</li>
           </ul>
         </div>
       </div>
@@ -38,22 +44,22 @@
     </div>
   </div>
 </div>
-<div [ngClass]="{'show': dialogBox}" class="new-recipe">
+<div [ngClass]="{'show animate__animated animate__fadeInUp': dialogBox}" class="new-recipe">
   <i (click)="dialogBox = false" class="fa-solid fa-xmark"></i>
   <h2>Add a new Recipe</h2>
   <form [formGroup]="recipeForm">
     <div class="p-3">
-      <label for="name">Name</label>
+      <label for="addName">Name</label>
       <input type="text" placeholder="Enter recipe name" formControlName="name">
     </div>
     <div class="px-3">
-      <label for="ingredients">Ingredients</label>
+      <label for="addIngredients">Ingredients</label>
       <textarea name="ingredients" cols="30" rows="6" placeholder='separate each ingredient with "*"
       Example:
       Sugar * Coffee * Lime' formControlName="ingredients"></textarea>
     </div>
     <div class="pt-3 px-3 pb-1">
-      <label for="directions">Directions</label>
+      <label for="addDirections">Directions</label>
       <textarea name="directions" cols="30" rows="6" placeholder='separate each direction step with "*"
       Example:
       Boil for 5 minutes *
@@ -75,13 +81,13 @@
       <label for="name">Name</label>
       <input value="{{ currentRecipe.name }}" placeholder="Enter name" id="editName" type="text" formControlName="name">
     </div>
-    <div class="p-3">
+    <div class="px-3">
       <label for="ingredients">Ingredients</label>
       <textarea value="{{ currentRecipe.ingredients }}" id="editIngredient" name="ingredients" cols="30" rows="6" placeholder='separate each ingredient with "*"
       Example:
       Sugar * Coffee * Lime' formControlName="ingredients"></textarea>
     </div>
-    <div class="p-3">
+    <div class="pt-3 px-3">
       <label for="directions">Directions</label>
       <textarea value="{{ currentRecipe.directions }}" id="editDirection" name="directions" cols="30" rows="6" placeholder='separate each direction step with "*"
       Example:
@@ -91,7 +97,7 @@
       ' formControlName="directions"></textarea>
     </div>
     <div class="recipe-buttons">
-      <button (click)="editRecipe(currentRecipe.id)" type="submit">Update</button>
+      <button (click)="editRecipe(currentRecipe)" type="submit">Update</button>
       <button (click)="editRecipeDialog = false" type="submit">Cancel</button>
     </div>
   </form>
