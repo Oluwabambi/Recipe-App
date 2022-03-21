@@ -27,6 +27,7 @@ h1, h2 {
     width: 35%;
     background-color: #f1d199;
     border-radius: 20px;
+    padding-top: 1.5rem;
     /* border: 2px solid #5f5f2d; */
     display: flex;
     box-shadow: 2px 2px 10px 5px #2b2b26;
@@ -39,7 +40,7 @@ h1, h2 {
     height: 2rem;
 }
 .searchrec {
-    padding: 1rem;
+    padding: 1rem 2rem 1rem 1rem;
     position: relative;
 }
 #searchbar {
@@ -49,12 +50,22 @@ h1, h2 {
 .btn-search {
     background-color: transparent;
     position: absolute;
-    right: 0;
+    top: 19px;
+    right: -27px;
     border: none;
     padding: 0.5rem 2rem;
 }
 .btn-search:hover {
     background-color: transparent;
+}
+.fa-search {
+    font-size: 20px;
+}
+.fa-search, .fa-solid {
+    transition: color 0.2s;
+}
+.fa-search:hover {
+    color: white;
 }
 .recipes {
     padding: 1rem;
@@ -65,20 +76,14 @@ h1, h2 {
     padding: 1rem;
     cursor: pointer;
     border-radius: 30px;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
     background-color: #3a729c;
     color: white;
+    transition: all 0.4s;
 }
-/* .recipe-item:nth-child(odd) {
-    background-color: #D21027;
-    color: white
-} */
-/* .recipe-item:nth-child(even) {
-    background-color: #15222c;
-    color: #D21027;
-} */
 .recipe-item:hover {
-    opacity: 0.8;
+    /* opacity: 0.8; */
+    box-shadow: 3px 3px 10px #363434;
 }
 .new-recipe, .edit-recipe {
     position: fixed;
@@ -110,7 +115,7 @@ h1, h2 {
     transition: color 0.25s;
 }
 .fa-solid:hover {
-    color: #D21027;
+    color: white;
 }
 .recipes .selected {
     background-color: black;
@@ -130,6 +135,7 @@ label {
 }
 input, textarea {
     padding: 0.5rem;
+    border-radius: 7px;
 }
 .recipe-buttons {
     display: flex;
@@ -211,5 +217,17 @@ li {
     }
     to {
         transform: rotate(360deg);
+    }
+}
+@media (max-width: 420px) {
+    .recipe-card {
+        flex-direction: column;
+        height: auto;
+    }
+    .recipe-list, .recipe-description {
+        width: 100%;
+    }
+    .recipe-list {
+        margin-bottom: 2rem;
     }
 }

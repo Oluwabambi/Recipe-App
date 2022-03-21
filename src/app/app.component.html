@@ -7,11 +7,11 @@
       </div>      
       <div class="recipes">
         <div class="searchrec">
-          <input [(ngModel)]="searchInput" type="search" name="recipeSearch" placeholder="Search for recipe" id="searchbar">
+          <input [(ngModel)]="searchInput" type="search" name="recipeSearch" placeholder="Search for ingredients here" id="searchbar">
           <button (click)="filter(searchInput)" class="btn-search"><i class="fas fa-search"></i></button>
         </div>
         <div class="loader"></div>
-        <div [class.selected]="recipe === currentRecipe" (click)="selectedRecipe(recipe)" *ngFor="let recipe of allRecipes | searchFilter: completeInput" class="recipe-item">{{recipe.name}}</div>
+        <div [class.selected]="recipe === currentRecipe" (click)="selectedRecipe(recipe)" *ngFor="let recipe of allRecipes | searchFilter: searchInput" class="recipe-item">{{recipe.name}}</div>
 
       </div>
 
