@@ -48,19 +48,19 @@
   <i (click)="dialogBox = false" class="fa-solid fa-xmark"></i>
   <h2>Add a new Recipe</h2>
   <form [formGroup]="recipeForm">
-    <div class="p-3">
+    <div class="recinp">
       <label for="addName">Name</label>
       <input type="text" placeholder="Enter recipe name" formControlName="name">
     </div>
     <div class="px-3">
       <label for="addIngredients">Ingredients</label>
-      <textarea name="ingredients" cols="30" rows="6" placeholder='separate each ingredient with "*"
+      <textarea name="ingredients" cols="30" rows="4" placeholder='separate each ingredient with "*"
       Example:
       Sugar * Coffee * Lime' formControlName="ingredients"></textarea>
     </div>
-    <div class="pt-3 px-3 pb-1">
+    <div class="directinp">
       <label for="addDirections">Directions</label>
-      <textarea name="directions" cols="30" rows="6" placeholder='separate each direction step with "*"
+      <textarea name="directions" cols="30" rows="4" placeholder='separate each direction step with "*"
       Example:
       Boil for 5 minutes *
       Keep in a cool environment *
@@ -73,7 +73,7 @@
     </div>
   </form>
 </div>
-<div [ngClass]="{'show': editRecipeDialog}"  class="edit-recipe">
+<div [ngClass]="{'show animate__animated animate__fadeInUp': editRecipeDialog}"  class="edit-recipe">
   <i (click)="editRecipeDialog = false" class="fa-solid fa-xmark"></i>
   <h2>Edit Recipe</h2>
   <form [formGroup]="recipeForm">
@@ -83,13 +83,13 @@
     </div>
     <div class="px-3">
       <label for="ingredients">Ingredients</label>
-      <textarea value="{{ currentRecipe.ingredients }}" id="editIngredient" name="ingredients" cols="30" rows="6" placeholder='separate each ingredient with "*"
+      <textarea value="{{ currentRecipe.ingredients }}" id="editIngredient" name="ingredients" cols="30" rows="4" placeholder='separate each ingredient with "*"
       Example:
       Sugar * Coffee * Lime' formControlName="ingredients"></textarea>
     </div>
-    <div class="pt-3 px-3">
+    <div class="directinp">
       <label for="directions">Directions</label>
-      <textarea value="{{ currentRecipe.directions }}" id="editDirection" name="directions" cols="30" rows="6" placeholder='separate each direction step with "*"
+      <textarea value="{{ currentRecipe.directions }}" id="editDirection" name="directions" cols="30" rows="4" placeholder='separate each direction step with "*"
       Example:
       Boil for 5 minutes *
       Keep in a cool environment *

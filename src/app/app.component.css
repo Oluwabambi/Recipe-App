@@ -86,21 +86,18 @@ h1, h2 {
     box-shadow: 3px 3px 10px #363434;
 }
 .new-recipe, .edit-recipe {
-    position: fixed;
+    position: absolute;
     display: none;
     top: 8%;
     background-color: #CDADAD;
     right: 30%;
     left: 30%;
-    height: 38.5rem;
+    height: 34rem;
     box-shadow: 3px 3px 10px #363434;
     border-radius: 25px;
 }
 .show {
     display: block;
-}
-.bg-bloo {
-    background-color: blue;
 }
 .new-recipe h2, .edit-recipe h2 {
     text-align: center;
@@ -127,6 +124,12 @@ form {
     display: flex;
     flex-direction: column;
 }
+.recinp {
+    padding: 1rem;
+}
+.directinp {
+    padding: 1rem 1rem 0.25rem;
+}
 label, input, textarea {
     width: 100%;
 }
@@ -136,24 +139,23 @@ label {
 input, textarea {
     padding: 0.5rem;
     border-radius: 7px;
+    border: 2px solid tan;
 }
 .recipe-buttons {
     display: flex;
     justify-content: space-around;
-    padding-bottom: 1rem;
-    padding-left: 6rem;
-    padding-right: 6rem;
+    padding: 0.5rem 6rem 1rem;
 }
 .recipe-buttons button {
     border-radius: 7px;
     border: none;
     padding: 0.5rem 2rem;
-    background-color: #D21027;
+    background-color: #3a729c;
     transition: all 0.25s;
 }
 .recipe-buttons button:hover:not([disabled]) {
-    background-color: #EDE530;
     color: white;
+    box-shadow: 1px 1px 10px #363434;
 }
 .recipe-description {
     width: 60%;
@@ -229,5 +231,20 @@ li {
     }
     .recipe-list {
         margin-bottom: 2rem;
+    }
+    .new-recipe, .edit-recipe {
+        left: 10%;
+        right: 10%;
+        height: 31rem;
+    }
+    .recipe-buttons {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .recinp {
+        padding: 0.25rem 1rem 0.75rem;
+    }
+    .directinp {
+        padding-top: 0.15rem;
     }
 }

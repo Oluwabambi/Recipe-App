@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DataService } from './service/data.service';
+import { LocalStorer } from './local-storer';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent {
   title = 'WebMagnat-frontend-test';
   dialogBox=false;
   editRecipeDialog = false;
-  allRecipes: any;
+  allRecipes: any = [];
   currentRecipe: any = '';
   currentIngredients = []
   currentDirections = []
@@ -42,8 +43,16 @@ export class AppComponent {
     this.dataService.getRecipes().subscribe( res => {
       if (res) {
         loader.style.display = "none";
+        localStorage.setItem('all recipes', JSON.stringify(res));
+
+        let ls:any = new LocalStorer;
+        if (ls.get('all_recipes') === null) {
+          ls.set(res);
+        }
+        console.log(ls.get('all_recipes'));
+        let recipes: any = ls.get('all_recipes');
+           
         this.allRecipes = res;
-        console.log(res);
         // for (let i = 0; i < this.allRecipes.length; i++) {
         //   const curr:any = this.allRecipes[i]
         //   curr.ingredients = curr.ingredients.split("*");
@@ -70,6 +79,7 @@ export class AppComponent {
   }
 
   submitRecipe() {
+    localStorage.setItem('new recipe', '')
     this.dataService.addRecipe(this.recipeForm.value).subscribe( res => {
       console.log(res);
       this.dialogBox = false;
