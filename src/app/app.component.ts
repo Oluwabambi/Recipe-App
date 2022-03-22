@@ -12,6 +12,7 @@ export class AppComponent {
   title = 'WebMagnat-frontend-test';
   dialogBox=false;
   editRecipeDialog = false;
+  recipes: any = [];
   allRecipes: any = [];
   currentRecipe: any = '';
   currentIngredients = []
@@ -19,6 +20,7 @@ export class AppComponent {
   searchInput: any;
   filterSearch: any = '';
   completeInput: any = null;
+  ls = new LocalStorer;
 
 
   constructor (private fb: FormBuilder, private dataService: DataService) {}
@@ -45,22 +47,24 @@ export class AppComponent {
         loader.style.display = "none";
         localStorage.setItem('all recipes', JSON.stringify(res));
 
-        let ls:any = new LocalStorer;
-        if (ls.get('all_recipes') === null) {
-          ls.set(res);
+        // let ls:any = new LocalStorer;
+        if (this.ls.get() === null) {
+          this.ls.set(res);
         }
-        console.log(ls.get('all_recipes'));
-        let recipes: any = ls.get('all_recipes');
+        console.log(this.ls.get());
+        this.recipes = this.ls.get();
            
-        this.allRecipes = res;
+        this.allRecipes = this.recipes;
         // for (let i = 0; i < this.allRecipes.length; i++) {
         //   const curr:any = this.allRecipes[i]
         //   curr.ingredients = curr.ingredients.split("*");
         //   curr.directions = curr.directions.split("*");
         // }
-        this.currentRecipe = this.allRecipes[0];
-        this.currentIngredients = this.currentRecipe.ingredients.split("*");
-        this.currentDirections = this.currentRecipe.directions.split("*");         
+        if (this.currentRecipe === '') {
+          this.currentRecipe = this.allRecipes[0];
+          this.currentIngredients = this.currentRecipe.ingredients.split("*");
+          this.currentDirections = this.currentRecipe.directions.split("*");
+        }              
       }
     })
   }
@@ -69,6 +73,7 @@ export class AppComponent {
     this.currentRecipe = recipe;
     this.currentIngredients = this.currentRecipe.ingredients.split("*");
     this.currentDirections = this.currentRecipe.directions.split("*");
+    console.log(this.currentRecipe);  
   }
 
   addNewRecipe() {
@@ -79,12 +84,21 @@ export class AppComponent {
   }
 
   submitRecipe() {
-    localStorage.setItem('new recipe', '')
-    this.dataService.addRecipe(this.recipeForm.value).subscribe( res => {
-      console.log(res);
-      this.dialogBox = false;
-      this.showRecipes();
-    })
+    console.log(this.recipeForm.value);
+    this.recipes.push(this.recipeForm.value);
+    this.ls.set(this.recipes);
+    this.selectedRecipe(this.recipeForm.value);
+    
+
+    this.dialogBox = false;
+    
+    
+    // this.dataService.addRecipe(this.recipeForm.value).subscribe( res => {
+    //   console.log(res);
+    //   // this.dialogBox = false;
+    //   // this.allRecipes.push(this.recipeForm.value)
+    //   // this.showRecipes();
+    // })
     this.recipeForm.reset();
   }
 
@@ -101,25 +115,39 @@ export class AppComponent {
     editedRec.name = recipeName.value;
     editedRec.ingredients = editIngredient.value;
     editedRec.directions = editDirection.value;
+
+    this.recipes = this.recipes.filter((r:any) => r !== editedRec);
+    this.recipes.push(editedRec);
+    this.ls.set(this.recipes);
+    this.allRecipes = this.recipes;
+    this.editRecipeDialog = false;
+
     console.log(editedRec);  
-    this.dataService.editRecipe(currentRec.id, editedRec).subscribe( () => {
+    // this.dataService.editRecipe(currentRec.id, editedRec).subscribe( () => {
       
-      this.editRecipeDialog = false;
-      this.showRecipes();
-      console.log(this.recipeForm.value);
+    //   this.editRecipeDialog = false;
+    //   this.showRecipes();
+    //   console.log(this.recipeForm.value);
       
-    } )
+    // } )
   }
 
   removeRecipe(recipe:any) {
     if(confirm("Are you sure you want to delete?")){
-      this.allRecipes = this.allRecipes.filter((r:any) => r !== recipe)
-      this.dataService.deleteRecipe(recipe.id).subscribe(()=> {
-        // this.showRecipes();
-        const lastIndex = this.allRecipes.length - 1;
-        this.currentRecipe = this.allRecipes[lastIndex];
-        this.selectedRecipe(this.currentRecipe);
-      })
+      this.recipes = this.recipes.filter((r:any) => r !== recipe);
+      this.ls.set(this.recipes);
+      this.allRecipes = this.recipes;
+      const lastIndex = this.allRecipes.length - 1;
+      this.currentRecipe = this.allRecipes[lastIndex];
+      this.selectedRecipe(this.currentRecipe);
+      
+
+      // this.dataService.deleteRecipe(recipe.id).subscribe(()=> {
+      //   // this.showRecipes();
+      //   const lastIndex = this.allRecipes.length - 1;
+      //   this.currentRecipe = this.allRecipes[lastIndex];
+      //   this.selectedRecipe(this.currentRecipe);
+      // })
     }
     
     
