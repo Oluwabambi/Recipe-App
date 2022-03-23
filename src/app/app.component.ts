@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DataService } from './service/data.service';
 import { LocalStorer } from './local-storer';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -85,6 +86,12 @@ export class AppComponent {
 
   submitRecipe() {
     console.log(this.recipeForm.value);
+    Swal.fire({
+      text: 'Recipe added successfully!',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false
+    })
     this.recipes.push(this.recipeForm.value);
     this.ls.set(this.recipes);
     this.selectedRecipe(this.recipeForm.value);
@@ -107,22 +114,24 @@ export class AppComponent {
   }
 
   editRecipe(currentRec:any) {
-    let editedRec: any = this.recipeForm.value;
+    currentRec= this.recipeForm.value;
     let recipeName: any = document.getElementById('editName');
     let editIngredient: any = document.getElementById('editIngredient');
     let editDirection: any = document.getElementById('editDirection');
 
-    editedRec.name = recipeName.value;
-    editedRec.ingredients = editIngredient.value;
-    editedRec.directions = editDirection.value;
-
-    this.recipes = this.recipes.filter((r:any) => r !== editedRec);
-    this.recipes.push(editedRec);
+    currentRec.name = recipeName.value;
+    currentRec.ingredients = editIngredient.value;
+    currentRec.directions = editDirection.value;
+    
+    this.recipes = this.recipes.filter((r:any) => r.name !== this.currentRecipe.name);
+    this.recipes.push(currentRec);
     this.ls.set(this.recipes);
     this.allRecipes = this.recipes;
     this.editRecipeDialog = false;
 
-    console.log(editedRec);  
+    this.currentRecipe = currentRec;
+
+    console.log(currentRec);  
     // this.dataService.editRecipe(currentRec.id, editedRec).subscribe( () => {
       
     //   this.editRecipeDialog = false;
